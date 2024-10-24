@@ -6,19 +6,30 @@
   const answer = document.getElementById('answer');
 
   function showLoading() {
-    answer.innerHTML = 'Loading…';
+    const loading = document.createElement('div');
+    loading.id = 'loading';
+    loading.innerHTML = 'Loading…';
+    document.body.appendChild(loading);
   }
 
   function clearLoading() {
+    const loading = document.getElementById('loading');
+    if (loading) {
+      loading.remove(); 
+    }
+  }
+
+  function clearAnswer() {
     answer.innerHTML = ''; 
   }
 
   example.addEventListener("click", function () {
     showLoading(); 
+    clearAnswer(); 
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => response.json())
       .then(array => {
-        console.log(array);
+        console.log(array); 
         clearLoading(); 
         answer.innerHTML = JSON.stringify(array);
       });
@@ -26,9 +37,11 @@
 
   cw1.addEventListener("click", function () {
     showLoading(); 
+    clearAnswer(); 
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => response.json())
       .then(array => {
+        console.log(array); 
         clearLoading(); 
 
         
@@ -49,9 +62,11 @@
   cw2.addEventListener("click", function () {
     const postId = 1; 
     showLoading(); 
+    clearAnswer(); 
     fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
       .then(response => response.json())
       .then(post => {
+        console.log(post); 
         clearLoading(); 
 
         
@@ -61,6 +76,7 @@
 
   cw3.addEventListener("click", function () {
     showLoading(); 
+    clearAnswer(); 
     const newPost = {
       title: 'Nowy post',
       body: 'To jest treść nowego posta.',
@@ -76,6 +92,7 @@
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data); 
       clearLoading(); 
       answer.innerHTML = `Dodano nowy post o ID = ${data.id}`; 
     })

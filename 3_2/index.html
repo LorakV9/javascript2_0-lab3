@@ -29,12 +29,31 @@
                 <tr>
                     <th>Dataset ID</th>
                     <th>Name</th>
-                    <th>Description</th>
+                    <th>Data Coverage</th>
                 </tr>
             </thead>
             <tbody id="datasetsTableBody"></tbody>
         </table>
 
+        <h1>NOAA Data Query</h1>
+        <input type="text" id="datasetId" placeholder="Enter Dataset ID">
+        <input type="text" id="locationId" placeholder="Enter Location ID">
+        <input type="date" id="startDate" placeholder="Start Date">
+        <input type="date" id="endDate" placeholder="End Date">
+        <button onclick="fetchDataWithParams()">Fetch Data</button>
+        <table id="dataTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Data Type</th>
+                    <th>Station</th>
+                    <th>Date</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody id="dataTableBody"></tbody>
+        </table>
+
+        
         <script src="script.js"></script>
       </body>
       </html>

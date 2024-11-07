@@ -1,106 +1,55 @@
-(function () {
-  const example = document.getElementById('example');
-  const cw1 = document.getElementById('cw1');
-  const cw2 = document.getElementById('cw2');
-  const cw3 = document.getElementById('cw3');
-  const answer = document.getElementById('answer');
-
-  function showLoading() {
-    const loading = document.createElement('div');
-    loading.id = 'loading';
-    loading.innerHTML = 'Loading…';
-    document.body.appendChild(loading);
+function searchCountry() {
+  const capital = document.getElementById("capitalInput").value;
+  if (!capital) {
+      alert("Please enter a capital name.");
+      return;
   }
 
-  function clearLoading() {
-    const loading = document.getElementById('loading');
-    if (loading) {
-      loading.remove(); 
-    }
-  }
-
-  function clearAnswer() {
-    answer.innerHTML = ''; 
-  }
-
-  example.addEventListener("click", function () {
-    showLoading(); 
-    clearAnswer(); 
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(array => {
-        console.log(array); 
-        clearLoading(); 
-        answer.innerHTML = JSON.stringify(array);
+  fetch(`https://restcountries.com/v3.1/capital/${capital}`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error("Country not found");
+          }
+          return response.json();
+      })
+      .then(data => {
+          displayCountryData(data);
+      })
+      .catch(error => {
+          alert(error.message);
+          document.getElementById("countryTable").style.display = "none";
       });
+}
+
+function displayCountryData(data) {
+  const tableBody = document.getElementById("tableBody");
+  tableBody.innerHTML = ""; // Clear previous results
+
+  data.forEach(country => {
+      const row = document.createElement("tr");
+
+      const nameCell = document.createElement("td");
+      nameCell.textContent = country.name.common;
+      row.appendChild(nameCell);
+
+      const capitalCell = document.createElement("td");
+      capitalCell.textContent = country.capital ? country.capital[0] : "N/A";
+      row.appendChild(capitalCell);
+
+      const populationCell = document.createElement("td");
+      populationCell.textContent = country.population.toLocaleString();
+      row.appendChild(populationCell);
+
+      const regionCell = document.createElement("td");
+      regionCell.textContent = country.region;
+      row.appendChild(regionCell);
+
+      const subregionCell = document.createElement("td");
+      subregionCell.textContent = country.subregion || "N/A";
+      row.appendChild(subregionCell);
+
+      tableBody.appendChild(row);
   });
 
-  cw1.addEventListener("click", function () {
-    showLoading(); 
-    clearAnswer(); 
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(array => {
-        console.log(array); 
-        clearLoading(); 
-
-        
-        const ul = document.createElement('ul');
-
-        
-        array.forEach(post => {
-          const li = document.createElement('li');
-          li.innerHTML = `<strong>${post.title}</strong><p>${post.body}</p>`;
-          ul.appendChild(li);
-        });
-
-        
-        answer.appendChild(ul);
-      });
-  });
-
-  cw2.addEventListener("click", function () {
-    const postId = 1; 
-    showLoading(); 
-    clearAnswer(); 
-    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-      .then(response => response.json())
-      .then(post => {
-        console.log(post); 
-        clearLoading(); 
-
-        
-        answer.innerHTML = `<strong>${post.title}</strong><p>${post.body}</p>`;
-      });
-  });
-
-  cw3.addEventListener("click", function () {
-    showLoading(); 
-    clearAnswer(); 
-    const newPost = {
-      title: 'Nowy post',
-      body: 'To jest treść nowego posta.',
-      userId: 1 
-    };
-
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newPost)
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); 
-      clearLoading(); 
-      answer.innerHTML = `Dodano nowy post o ID = ${data.id}`; 
-    })
-    .catch(error => {
-      clearLoading(); 
-      answer.innerHTML = 'Wystąpił błąd podczas dodawania posta.';
-      console.error('Error:', error);
-    });
-  });
-
-})();
+  document.getElementById("countryTable").style.display = "table";
+}

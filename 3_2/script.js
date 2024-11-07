@@ -14,7 +14,7 @@ function fetchStations() {
 
 function displayStations(stations) {
   const tableBody = document.getElementById("stationsTableBody");
-  tableBody.innerHTML = ""; // Clear previous results
+  tableBody.innerHTML = ""; 
 
   stations.forEach((station) => {
     const row = document.createElement("tr");
@@ -60,7 +60,7 @@ function fetchDatasets() {
 
 function displayDatasets(datasets) {
   const tableBody = document.getElementById("datasetsTableBody");
-  tableBody.innerHTML = ""; // Clear previous results
+  tableBody.innerHTML = ""; 
 
   datasets.forEach((dataset) => {
     const row = document.createElement("tr");
@@ -110,7 +110,7 @@ function fetchDataWithParams() {
 
 function displayData(dataResults) {
   const tableBody = document.getElementById("dataTableBody");
-  tableBody.innerHTML = ""; // Clear previous results
+  tableBody.innerHTML = ""; 
 
   dataResults.forEach((dataItem) => {
     const row = document.createElement("tr");

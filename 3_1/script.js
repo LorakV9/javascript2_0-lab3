@@ -23,7 +23,7 @@ function searchCountry() {
 
 function displayCountryData(data) {
   const tableBody = document.getElementById("tableBody");
-  tableBody.innerHTML = ""; // Clear previous results
+  tableBody.innerHTML = "";
 
   data.forEach(country => {
       const row = document.createElement("tr");

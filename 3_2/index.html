@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  </head>
+      <body>
+        <h1>NOAA Stations Data</h1>
+        <button onclick="fetchStations()">Fetch Stations Data</button>
+        <table id="stationsTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Station ID</th>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody id="stationsTableBody"></tbody>
+        </table>
+
+        <script src="script.js"></script>
+      </body>
+      </html>
